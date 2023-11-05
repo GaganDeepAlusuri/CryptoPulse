@@ -204,7 +204,7 @@ namespace CryptoPulse.Controllers
                 try
                 {
                     // Find the coin with the given ID in the table
-                    var coinToDelete = dbContext.Coins.FirstOrDefault(c => c.ID == coinID);
+                    var coinToDelete = dbContext.Coins.FirstOrDefault(c => c.ID == coinID && c.IdentityUserId == _userManager.GetUserId(User));
 
                     if (coinToDelete != null)
                     {
