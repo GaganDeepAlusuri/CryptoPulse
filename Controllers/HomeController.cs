@@ -4,7 +4,6 @@ using CryptoPulse.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Text;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Diagnostics;
@@ -27,7 +26,36 @@ namespace CryptoPulse.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            try
+            {
+                // Attempt to retrieve and serialize coin data
+                CryptoPulseHandler webHandler = new CryptoPulseHandler();
+                List<Coin> coins = webHandler.GetCoins();
+                string coinsData = JsonConvert.SerializeObject(coins);
+                HttpContext.Session.SetString(SessionKeyName, coinsData);
+
+                // Sort the coins by price in descending order
+                List<Coin> sortedCoins = coins.OrderByDescending(cp => cp.PriceUSD).ToList();
+
+                // Take the top 10 coins
+                List<Coin> top10Coins = sortedCoins.Take(10).ToList();
+
+                // Set the success flag to 1 on success
+                ViewBag.dbSucessComp = 1;
+
+                return View("Index", top10Coins);
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception here (e.g., log it or set an error flag)
+                ViewBag.dbSucessComp = 0;
+
+                // Optionally, you can pass the exception message to the view
+                ViewBag.ErrorMessage = ex.Message;
+
+                // Return an error view or take appropriate action
+                return View("Error"); // You should create an "Error" view in your Views folder
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -320,7 +348,6 @@ namespace CryptoPulse.Controllers
             // Return the list of coinsForUser
             return coinsForUser;
         }
-
 
         /****
          * Saves the Markets in database.

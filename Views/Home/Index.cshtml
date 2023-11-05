@@ -1,35 +1,107 @@
-﻿@{
+﻿@model List<Coin>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome to Crypto Pulse</h1>
+
     <div class="container mt-5">
+
         <section class="mb-5">
             <h2>Real-Time Cryptocurrency Prices</h2>
-            <p>Stay updated with real-time prices for a wide range of cryptocurrencies. From Bitcoin (BTC) and Ethereum (ETH) to altcoins and tokens, you'll have access to the latest market data.</p>
+            <p>
+                Stay updated with real-time prices for a wide range of cryptocurrencies.
+                From Bitcoin (BTC) and Ethereum (ETH) to altcoins and tokens, you'll have
+                access to the latest market data.
+            </p>
             <div class="text-center">
-                <!-- Sample Price Chart Image -->
-                <img src="price_chart.png" alt="Sample Price Chart" class="img-fluid">
+                <h2>Top 10 Coins by Price</h2>
+                <hr />
+                <canvas id="coinChart" width="400" height="200"></canvas>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+                <script>
+                    // Deserialize the JSON data from the server and store it in the 'coins' variable
+                    const coins = JSON.parse(`@Html.Raw(Json.Serialize(Model))`);
+
+                    // Extract coin names and prices
+                    const coinNames = coins.map(c => c.symbol);
+                    const coinPrices = coins.map(c => c.priceUSD);
+
+                    // Generate an array of random background colors for each coin
+                    const backgroundColors = coinNames.map(() => getRandomColor());
+
+                    // Get the canvas element by its ID
+                    const ctx = document.getElementById('coinChart').getContext('2d');
+
+                    // Create the chart with different colors for each coin
+                    const chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: coinNames,
+                            datasets: [{
+                                label: 'Price (USD)',
+                                data: coinPrices,
+                                backgroundColor: backgroundColors, // Use the generated colors
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                    // Function to generate a random color
+                    function getRandomColor() {
+                        const letters = '0123456789ABCDEF';
+                        let color = '#';
+                        for (let i = 0; i < 6; i++) {
+                            color += letters[Math.floor(Math.random() * 16)];
+                        }
+                        return color;
+                    }
+                </script>
             </div>
         </section>
 
         <section class="mb-5">
             <h2>Explore the World of Cryptocurrencies</h2>
+
             <div class="row">
                 <div class="col-md-4">
                     <h3>Coins</h3>
-                    <p>Discover detailed information about individual cryptocurrencies. Get insights into their market capitalization, trading volume, and historical data. Explore coin profiles to make informed investment decisions.</p>
+                    <p>
+                        Discover detailed information about individual cryptocurrencies.
+                        Get insights into their market capitalization, trading volume, and
+                        historical data. Explore coin profiles to make informed investment
+                        decisions.
+                    </p>
                     <a asp-area="" asp-controller="Home" asp-action="Coins" class="btn btn-primary">Explore Coins</a>
                 </div>
+
                 <div class="col-md-4">
                     <h3>Markets</h3>
-                    <p>Track cryptocurrency markets from around the globe. View market data, trading pairs, and volume statistics. Analyze market trends and identify potential trading opportunities.</p>
+                    <p>
+                        Track cryptocurrency markets from around the globe. View market
+                        data, trading pairs, and volume statistics. Analyze market trends
+                        and identify potential trading opportunities.
+                    </p>
                     <a asp-area="" asp-controller="Home" asp-action="Markets" class="btn btn-primary">Explore Markets</a>
                 </div>
+
                 <div class="col-md-4">
                     <h3>Exchanges</h3>
-                    <p>Learn about cryptocurrency exchanges and trading platforms. Compare fees, supported assets, and security features. Make informed decisions about where to trade your favorite digital assets.</p>
+                    <p>
+                        Learn about cryptocurrency exchanges and trading platforms. Compare
+                        fees, supported assets, and security features. Make informed
+                        decisions about where to trade your favorite digital assets.
+                    </p>
                     <a asp-area="" asp-controller="Home" asp-action="Exchanges" class="btn btn-primary">Explore Exchanges</a>
                 </div>
             </div>
@@ -37,8 +109,13 @@
 
         <section class="mb-5">
             <h2>Your Personal Watchlist</h2>
-            <p>Create a personalized watchlist of your favorite cryptocurrencies. Stay informed about price changes and market movements for the assets that matter most to you.</p>
+            <p>
+                Create a personalized watchlist of your favorite cryptocurrencies. Stay
+                informed about price changes and market movements for the assets that
+                matter most to you.
+            </p>
             <a asp-area="" asp-controller="Home" asp-action="WatchList" class="btn btn-primary">Manage Watchlist</a>
         </section>
+
     </div>
 </div>
