@@ -21,13 +21,13 @@ body {
   margin-bottom: 60px;
 }
 
-body {
+/*body {
     background-image: url('../images/img0.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center center;
-}
+}*/
 
 .registration {
     max-width: 100%;
