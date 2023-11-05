@@ -9,7 +9,6 @@
         <table class="table table-dark table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Name ID</th>
                     <th>Volume (USD)</th>
@@ -22,7 +21,6 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.ExchangeID)</td>
                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
                         <td>@Html.DisplayFor(modelItem => item.NameId)</td>
                         <td>@Html.DisplayFor(modelItem => item.VolumeUSD)</td>

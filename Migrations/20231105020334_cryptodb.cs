@@ -139,8 +139,9 @@ namespace CryptoPulse.Migrations
                 name: "Coins",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    coinID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ID = table.Column<int>(type: "int", nullable: false),
                     Symbol = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rank = table.Column<int>(type: "int", nullable: false),
@@ -157,7 +158,7 @@ namespace CryptoPulse.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Coins", x => x.ID);
+                    table.PrimaryKey("PK_Coins", x => x.coinID);
                     table.ForeignKey(
                         name: "FK_Coins_Users_IdentityUserId",
                         column: x => x.IdentityUserId,
@@ -180,17 +181,17 @@ namespace CryptoPulse.Migrations
                     Volume = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     VolumeUSD = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Time = table.Column<long>(type: "bigint", nullable: false),
-                    CoinID = table.Column<int>(type: "int", nullable: true),
-                    ExchangeID = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ExchangeID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    coinID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Markets", x => x.MarketID);
                     table.ForeignKey(
-                        name: "FK_Markets_Coins_CoinID",
-                        column: x => x.CoinID,
+                        name: "FK_Markets_Coins_coinID",
+                        column: x => x.coinID,
                         principalTable: "Coins",
-                        principalColumn: "ID");
+                        principalColumn: "coinID");
                     table.ForeignKey(
                         name: "FK_Markets_Exchanges_ExchangeID",
                         column: x => x.ExchangeID,
@@ -204,9 +205,9 @@ namespace CryptoPulse.Migrations
                 column: "IdentityUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Markets_CoinID",
+                name: "IX_Markets_coinID",
                 table: "Markets",
-                column: "CoinID");
+                column: "coinID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Markets_ExchangeID",

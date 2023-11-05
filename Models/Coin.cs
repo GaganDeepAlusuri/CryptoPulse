@@ -10,6 +10,8 @@ namespace CryptoPulse.Models
     public class Coin
     {
         [Key]
+        public int coinID { get; set; }
+
         [JsonProperty("id")]
         public int ID { get; set; }
 

@@ -8,7 +8,6 @@
         <table class="table table-dark table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Symbol</th>
                     <th>Name</th>
                     <th>Price USD</th>
@@ -26,7 +25,6 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.ID)</td>
                         <td>@Html.DisplayFor(modelItem => item.Symbol)</td>
                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
                         <td>@Html.DisplayFor(modelItem => item.PriceUSD)</td>

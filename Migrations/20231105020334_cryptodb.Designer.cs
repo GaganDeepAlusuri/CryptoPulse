@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CryptoPulse.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20231104223044_cryptodb")]
+    [Migration("20231105020334_cryptodb")]
     partial class cryptodb
     {
         /// <inheritdoc />
@@ -27,11 +27,14 @@ namespace CryptoPulse.Migrations
 
             modelBuilder.Entity("CryptoPulse.Models.Coin", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("coinID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("coinID"));
+
+                    b.Property<int>("ID")
+                        .HasColumnType("int");
 
                     b.Property<string>("IdentityUserId")
                         .IsRequired()
@@ -75,7 +78,7 @@ namespace CryptoPulse.Migrations
                     b.Property<decimal?>("Volume24h")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("ID");
+                    b.HasKey("coinID");
 
                     b.HasIndex("IdentityUserId");
 
@@ -126,9 +129,6 @@ namespace CryptoPulse.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CoinID")
-                        .HasColumnType("int");
-
                     b.Property<string>("ExchangeID")
                         .HasColumnType("nvarchar(450)");
 
@@ -155,11 +155,14 @@ namespace CryptoPulse.Migrations
                     b.Property<decimal>("VolumeUSD")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int?>("coinID")
+                        .HasColumnType("int");
+
                     b.HasKey("MarketID");
 
-                    b.HasIndex("CoinID");
-
                     b.HasIndex("ExchangeID");
+
+                    b.HasIndex("coinID");
 
                     b.ToTable("Markets");
                 });
@@ -356,13 +359,13 @@ namespace CryptoPulse.Migrations
 
             modelBuilder.Entity("CryptoPulse.Models.Market", b =>
                 {
-                    b.HasOne("CryptoPulse.Models.Coin", null)
-                        .WithMany("Markets")
-                        .HasForeignKey("CoinID");
-
                     b.HasOne("CryptoPulse.Models.Exchange", null)
                         .WithMany("Markets")
                         .HasForeignKey("ExchangeID");
+
+                    b.HasOne("CryptoPulse.Models.Coin", null)
+                        .WithMany("Markets")
+                        .HasForeignKey("coinID");
                 });
 
             modelBuilder.Entity("CryptoPulse.Models.Coin", b =>

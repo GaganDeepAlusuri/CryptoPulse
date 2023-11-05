@@ -131,11 +131,8 @@ namespace CryptoPulse.Controllers
             {
                 try
                 {
-                    // Enable IDENTITY_INSERT for the "Coins" table
-                    dbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Coins ON");
-
                     // Check if a coin with the same symbol already exists in the table
-                    var existingCoin = dbContext.Coins.FirstOrDefault(c => c.Symbol.Equals(coin.Symbol));
+                    var existingCoin = dbContext.Coins.FirstOrDefault(c => c.Symbol.Equals(coin.Symbol) && c.IdentityUserId == _userManager.GetUserId(User));
 
                     if (existingCoin == null)
                     {
@@ -184,11 +181,6 @@ namespace CryptoPulse.Controllers
                     ViewBag.dbSuccessComp = 0;
                     // Handle the exception as needed (e.g., log the error).
                 }
-                finally
-                {
-                    // Disable IDENTITY_INSERT
-                    dbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Coins OFF");
-                }
             }
             CryptoPulseHandler webHandler = new CryptoPulseHandler();
             List<Coin> coins = webHandler.GetCoins();
@@ -204,7 +196,7 @@ namespace CryptoPulse.Controllers
                 try
                 {
                     // Find the coin with the given ID in the table
-                    var coinToDelete = dbContext.Coins.FirstOrDefault(c => c.ID == coinID && c.IdentityUserId == _userManager.GetUserId(User));
+                    var coinToDelete = dbContext.Coins.FirstOrDefault(c => c.coinID == coinID && c.IdentityUserId == _userManager.GetUserId(User));
 
                     if (coinToDelete != null)
                     {
