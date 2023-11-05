@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Crypto Pulse</h1>
+    <div class="container mt-5">
+        <section class="mb-5">
+            <h2>Real-Time Cryptocurrency Prices</h2>
+            <p>Stay updated with real-time prices for a wide range of cryptocurrencies. From Bitcoin (BTC) and Ethereum (ETH) to altcoins and tokens, you'll have access to the latest market data.</p>
+            <div class="text-center">
+                <!-- Sample Price Chart Image -->
+                <img src="price_chart.png" alt="Sample Price Chart" class="img-fluid">
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>Explore the World of Cryptocurrencies</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>Coins</h3>
+                    <p>Discover detailed information about individual cryptocurrencies. Get insights into their market capitalization, trading volume, and historical data. Explore coin profiles to make informed investment decisions.</p>
+                    <a asp-area="" asp-controller="Home" asp-action="Coins" class="btn btn-primary">Explore Coins</a>
+                </div>
+                <div class="col-md-4">
+                    <h3>Markets</h3>
+                    <p>Track cryptocurrency markets from around the globe. View market data, trading pairs, and volume statistics. Analyze market trends and identify potential trading opportunities.</p>
+                    <a asp-area="" asp-controller="Home" asp-action="Markets" class="btn btn-primary">Explore Markets</a>
+                </div>
+                <div class="col-md-4">
+                    <h3>Exchanges</h3>
+                    <p>Learn about cryptocurrency exchanges and trading platforms. Compare fees, supported assets, and security features. Make informed decisions about where to trade your favorite digital assets.</p>
+                    <a asp-area="" asp-controller="Home" asp-action="Exchanges" class="btn btn-primary">Explore Exchanges</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <h2>Your Personal Watchlist</h2>
+            <p>Create a personalized watchlist of your favorite cryptocurrencies. Stay informed about price changes and market movements for the assets that matter most to you.</p>
+            <a asp-area="" asp-controller="Home" asp-action="WatchList" class="btn btn-primary">Manage Watchlist</a>
+        </section>
+    </div>
+</div>

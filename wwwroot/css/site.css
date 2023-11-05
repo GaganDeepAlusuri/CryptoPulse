@@ -1,0 +1,45 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+body {
+    background-image: url('../images/img0.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
+.registration {
+    max-width: 100%;
+    height: auto;
+    display: block; /* This ensures the image doesn't have extra spacing underneath */
+    margin: 0 auto; /* Center the image horizontally */
+}
+
+.loader {
+    /* Your loader styles */
+}
+
+.toast {
+    /* Your toast styles */
+}
