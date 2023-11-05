@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CryptoPulse.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20231105020334_cryptodb")]
+    [Migration("20231105205419_cryptodb")]
     partial class cryptodb
     {
         /// <inheritdoc />
