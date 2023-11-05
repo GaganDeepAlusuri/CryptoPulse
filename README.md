@@ -36,6 +36,13 @@ CryptoPulse is a cryptocurrency tracking web application built using .NET MVC, E
 
 ## How to Set Up and Run the Project
 ## Database Configuration
+## Apply Migrations
+- Run the following commands in the terminal:
+- dotnet ef migrations add cryptodb
+- dotnet ef database update
+. **Clone the Repository**
+   ```bash
+   git clone https://github.com/yourusername/CryptoPulse.git
 
 ### Open `appsettings.json`
 
@@ -53,13 +60,3 @@ CryptoPulse is a cryptocurrency tracking web application built using .NET MVC, E
     "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=CryptoPulseDb;Trusted_Connection=True;MultipleActiveResultSets=true"
   }
 }
-Apply Migrations
-Run the following commands in the terminal:
-bash
-Copy code
-dotnet ef migrations add cryptodb
-dotnet ef database update
-
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/yourusername/CryptoPulse.git
