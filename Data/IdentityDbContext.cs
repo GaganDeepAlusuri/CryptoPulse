@@ -25,6 +25,11 @@ namespace CryptoPulse.Data
                 .WithMany(user => user.Coins)
                 .HasForeignKey(coin => coin.IdentityUserId);
 
+            modelBuilder.Entity<Coin>()
+                .HasMany(c => c.Markets)
+                .WithOne(m => m.Coin)
+                .HasForeignKey(m => m.coinId);
+
             modelBuilder.Entity<IdentityUserLogin<string>>().HasNoKey();
             modelBuilder.Entity<IdentityUserRole<string>>().HasNoKey();
             modelBuilder.Entity<IdentityUserToken<string>>().HasNoKey();

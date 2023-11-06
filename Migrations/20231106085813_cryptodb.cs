@@ -171,8 +171,9 @@ namespace CryptoPulse.Migrations
                 name: "Markets",
                 columns: table => new
                 {
-                    MarketID = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    coinId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Base = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Quote = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -180,23 +181,17 @@ namespace CryptoPulse.Migrations
                     PriceUSD = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Volume = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     VolumeUSD = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Time = table.Column<long>(type: "bigint", nullable: false),
-                    ExchangeID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    coinID = table.Column<int>(type: "int", nullable: true)
+                    Time = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Markets", x => x.MarketID);
+                    table.PrimaryKey("PK_Markets", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Markets_Coins_coinID",
-                        column: x => x.coinID,
+                        name: "FK_Markets_Coins_coinId",
+                        column: x => x.coinId,
                         principalTable: "Coins",
-                        principalColumn: "coinID");
-                    table.ForeignKey(
-                        name: "FK_Markets_Exchanges_ExchangeID",
-                        column: x => x.ExchangeID,
-                        principalTable: "Exchanges",
-                        principalColumn: "ExchangeID");
+                        principalColumn: "coinID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -205,19 +200,17 @@ namespace CryptoPulse.Migrations
                 column: "IdentityUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Markets_coinID",
+                name: "IX_Markets_coinId",
                 table: "Markets",
-                column: "coinID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Markets_ExchangeID",
-                table: "Markets",
-                column: "ExchangeID");
+                column: "coinId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Exchanges");
+
             migrationBuilder.DropTable(
                 name: "Markets");
 
@@ -241,9 +234,6 @@ namespace CryptoPulse.Migrations
 
             migrationBuilder.DropTable(
                 name: "Coins");
-
-            migrationBuilder.DropTable(
-                name: "Exchanges");
 
             migrationBuilder.DropTable(
                 name: "Users");

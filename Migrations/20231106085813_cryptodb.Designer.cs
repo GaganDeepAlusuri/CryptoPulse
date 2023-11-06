@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CryptoPulse.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20231105205419_cryptodb")]
+    [Migration("20231106085813_cryptodb")]
     partial class cryptodb
     {
         /// <inheritdoc />
@@ -119,18 +119,15 @@ namespace CryptoPulse.Migrations
 
             modelBuilder.Entity("CryptoPulse.Models.Market", b =>
                 {
-                    b.Property<int>("MarketID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MarketID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Base")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ExchangeID")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -155,14 +152,12 @@ namespace CryptoPulse.Migrations
                     b.Property<decimal>("VolumeUSD")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("coinID")
+                    b.Property<int>("coinId")
                         .HasColumnType("int");
 
-                    b.HasKey("MarketID");
+                    b.HasKey("ID");
 
-                    b.HasIndex("ExchangeID");
-
-                    b.HasIndex("coinID");
+                    b.HasIndex("coinId");
 
                     b.ToTable("Markets");
                 });
@@ -359,21 +354,16 @@ namespace CryptoPulse.Migrations
 
             modelBuilder.Entity("CryptoPulse.Models.Market", b =>
                 {
-                    b.HasOne("CryptoPulse.Models.Exchange", null)
+                    b.HasOne("CryptoPulse.Models.Coin", "Coin")
                         .WithMany("Markets")
-                        .HasForeignKey("ExchangeID");
+                        .HasForeignKey("coinId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("CryptoPulse.Models.Coin", null)
-                        .WithMany("Markets")
-                        .HasForeignKey("coinID");
+                    b.Navigation("Coin");
                 });
 
             modelBuilder.Entity("CryptoPulse.Models.Coin", b =>
-                {
-                    b.Navigation("Markets");
-                });
-
-            modelBuilder.Entity("CryptoPulse.Models.Exchange", b =>
                 {
                     b.Navigation("Markets");
                 });

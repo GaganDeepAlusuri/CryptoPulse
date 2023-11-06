@@ -149,72 +149,6 @@ namespace CryptoPulse.Controllers
             }
         }
 
-        public IActionResult AddToWatchList(string coinJson)
-        {
-            //Set ViewBag variable first
-            ViewBag.dbSucessComp = 0;
-            // Deserialize the JSON data back to a list of Coin objects
-            CoinWatchList coin = JsonConvert.DeserializeObject<CoinWatchList>(coinJson);
-            using (var transaction = dbContext.Database.BeginTransaction())
-            {
-                try
-                {
-                    // Check if a coin with the same symbol already exists in the table
-                    var existingCoin = dbContext.Coins.FirstOrDefault(c => c.Symbol.Equals(coin.Symbol) && c.IdentityUserId == _userManager.GetUserId(User));
-
-                    if (existingCoin == null)
-                    {
-                        // Coin does not exist, so add it
-                        // Create a new Coin object and set its properties
-                        Coin newCoin = new Coin
-                        {
-                            IdentityUserId = _userManager.GetUserId(User),
-                            Symbol = coin.Symbol,
-                            Name = coin.Name,
-                            Rank = coin.Rank,
-                            PriceUSD = coin.PriceUSD, // Replace with the actual price
-                            ID = coin.ID, // Replace with the actual ID value
-                            MarketCapUSD = coin.MarketCapUSD, // Replace with the actual market cap
-                            Volume24h = coin.Volume24h, // Replace with the actual 24-hour volume
-                            SupplyCurrent = coin.SupplyCurrent, // Replace with the actual current supply
-                            SupplyTotal = coin.SupplyTotal, // Replace with the actual total supply
-                            SupplyMax = coin.SupplyMax, // Replace with the actual maximum supply
-                            PercentChange1h = coin.PercentChange1h, // Replace with the actual 1-hour percentage change
-                            PercentChange24h = coin.PercentChange24h, // Replace with the actual 24-hour percentage change
-                            PercentChange7d = coin.PercentChange7d // Replace with the actual 7-day percentage change
-                        };
-
-                        // Add the newCoin object to the dbContext
-                        dbContext.Coins.Add(newCoin);
-
-                        // Save changes to the database
-                        dbContext.SaveChanges();
-
-                        dbContext.SaveChanges();
-                        transaction.Commit();
-                        ViewBag.dbSuccessComp = 1;
-                    }
-                    else
-                    {
-                        // Coin with the same symbol already exists, you can handle it as needed
-                        // For example, update the existing record or skip the duplicate
-                        transaction.Rollback();
-                        ViewBag.dbSuccessComp = 0;
-                        // Handle the duplicate coin here
-                    }
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    ViewBag.dbSuccessComp = 0;
-                    // Handle the exception as needed (e.g., log the error).
-                }
-            }
-            CryptoPulseHandler webHandler = new CryptoPulseHandler();
-            List<Coin> coins = webHandler.GetCoins();
-            return View("Coins", coins);
-        }
-
         public IActionResult DeleteFromWatchList(int coinID)
         {
             // Set ViewBag variable first
@@ -239,15 +173,24 @@ namespace CryptoPulse.Controllers
                     {
                         // Coin with the given ID does not exist, handle it as needed
                         transaction.Rollback();
-                        ViewBag.dbSuccessComp = 0;
-                        // Handle the case when the coin does not exist in the table
+                        // Handle the exception here (e.g., log it or set an error flag)
+                        ViewBag.dbSucessComp = 0;
+
+                        // Return an error view or take appropriate action
+                        return View("Error"); // You should create an "Error" view in your Views folder
                     }
                 }
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    ViewBag.dbSuccessComp = 0;
-                    // Handle the exception as needed (e.g., log the error).
+                    // Handle the exception here (e.g., log it or set an error flag)
+                    ViewBag.dbSucessComp = 0;
+
+                    // Optionally, you can pass the exception message to the view
+                    ViewBag.ErrorMessage = ex.Message;
+
+                    // Return an error view or take appropriate action
+                    return View("Error"); // You should create an "Error" view in your Views folder
                 }
             }
 
@@ -349,58 +292,138 @@ namespace CryptoPulse.Controllers
             return coinsForUser;
         }
 
-        /****
-         * Saves the Markets in database.
-        ****/
-        public IActionResult PopulateMarkets()
+        public IActionResult AddToWatchListAndPopulateMarkets(string coinJson)
         {
-            string marketsData = HttpContext.Session.GetString(SessionKeyName);
-            List<Market> markets = null;
+            // Set ViewBag variables initially
+            ViewBag.dbSuccessComp = 0;
 
-            using (var transaction = dbContext.Database.BeginTransaction())
+            try
             {
-                try
+                using (var transaction = dbContext.Database.BeginTransaction())
                 {
-                    if (!string.IsNullOrEmpty(marketsData))
+                    try
                     {
-                        markets = JsonConvert.DeserializeObject<List<Market>>(marketsData);
-                    }
+                        CoinWatchList coin = JsonConvert.DeserializeObject<CoinWatchList>(coinJson);
 
-                    // Enable IDENTITY_INSERT for the "Markets" table
-                    dbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Markets ON");
+                        // Add the coin to the watchlist
+                        Coin insertedCoin = AddCoinToWatchlist(coin);
 
-                    foreach (Market market in markets)
-                    {
-                        // Check if the market already exists in the database based on its unique identifier.
-                        // You may need to adjust the condition based on your database schema.
-                        bool marketExists = dbContext.Markets.Any(m => m.MarketID == market.MarketID);
-
-                        if (!marketExists)
+                        if (ViewBag.dbSuccessComp == 1)
                         {
-                            dbContext.Markets.Add(market);
+                            // If adding the coin succeeded, populate its markets
+                            PopulateMarkets(coin.ID, insertedCoin);
+                        }
+
+                        if (ViewBag.dbSuccessComp == 1)
+                        {
+                            transaction.Commit(); // Commit the entire transaction
+                            CryptoPulseHandler webHandler = new CryptoPulseHandler();
+                            List<Coin> coins = webHandler.GetCoins();
+                            return View("Coins", coins);
+                        }
+                        else
+                        {
+                            transaction.Rollback(); // Rollback the entire transaction
+                                                    // Handle the exception here (e.g., log it or set an error flag)
+                            ViewBag.dbSucessComp = 0;
+
+                            // Return an error view or take appropriate action
+                            return View("Error"); // You should create an "Error" view in your Views folder
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback(); // Rollback the entire transaction
+                                                // Handle the exception here (e.g., log it or set an error flag)
+                        ViewBag.dbSucessComp = 0;
 
-                    dbContext.SaveChanges();
-                    transaction.Commit();
-                    ViewBag.dbSuccessComp = 1;
+                        // Optionally, you can pass the exception message to the view
+                        ViewBag.ErrorMessage = ex.Message;
+
+                        // Return an error view or take appropriate action
+                        return View("Error"); // You should create an "Error" view in your Views folder
+                    }
                 }
-                catch (Exception ex)
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return RedirectToAction("Error"); // Redirect to an error action
+            }
+        }
+
+        private Coin AddCoinToWatchlist(CoinWatchList coin)
+        {
+            // Check if a coin with the same symbol already exists in the table
+            var existingCoin = dbContext.Coins.FirstOrDefault(c => c.Symbol.Equals(coin.Symbol) && c.IdentityUserId == _userManager.GetUserId(User));
+
+            if (existingCoin == null)
+            {
+                // Coin does not exist, so add it
+                Coin newCoin = new Coin
                 {
-                    transaction.Rollback();
-                    ViewBag.dbSuccessComp = 0;
-                    // Handle the exception as needed (e.g., log the error).
-                    // Optionally, store the exception message in ViewBag
-                    ViewBag.ErrorMessage = ex.Message;
-                }
-                finally
+                    IdentityUserId = _userManager.GetUserId(User),
+                    Symbol = coin.Symbol,
+                    Name = coin.Name,
+                    Rank = coin.Rank,
+                    PriceUSD = coin.PriceUSD, // Replace with the actual price
+                    ID = coin.ID, // Replace with the actual ID value
+                    MarketCapUSD = coin.MarketCapUSD, // Replace with the actual market cap
+                    Volume24h = coin.Volume24h, // Replace with the actual 24-hour volume
+                    SupplyCurrent = coin.SupplyCurrent, // Replace with the actual current supply
+                    SupplyTotal = coin.SupplyTotal, // Replace with the actual total supply
+                    SupplyMax = coin.SupplyMax, // Replace with the actual maximum supply
+                    PercentChange1h = coin.PercentChange1h, // Replace with the actual 1-hour percentage change
+                    PercentChange24h = coin.PercentChange24h, // Replace with the actual 24-hour percentage change
+                    PercentChange7d = coin.PercentChange7d // Replace with the actual 7-day percentage change
+                };
+
+                dbContext.Coins.Add(newCoin);
+                dbContext.SaveChanges();
+                ViewBag.dbSuccessComp = 1; // Set success flag
+                return newCoin;
+            }
+            else
+            {
+                // Coin with the same symbol already exists
+                ViewBag.dbSuccessComp = 0; // Set failure flag
+                return new Coin();
+            }
+        }
+
+        private void PopulateMarkets(int coinId, Coin coin)
+        {
+            CryptoPulseHandler webHandler = new CryptoPulseHandler();
+            List<Market> markets = webHandler.GetMarkets(coinId);
+
+            // Check if the coinId is valid before inserting markets
+            var existingCoin = dbContext.Coins.FirstOrDefault(c => c.ID == coinId);
+
+            if (existingCoin == null)
+            {
+                // Handle the case where the coinId doesn't exist in the Coins table
+                ViewBag.dbSuccessComp = 0;
+                ViewBag.ErrorMessage = "Invalid coinId.";
+                return;
+            }
+
+            // Ensure that the coinId is set for each market before adding it
+            foreach (Market market in markets)
+            {
+                market.Coin = coin;
+                market.coinId = coinId; // Set the correct coinId for each market
+                bool marketExists = dbContext.Markets.Any(m => m.coinId == market.coinId);
+
+                if (!marketExists)
                 {
-                    // Disable IDENTITY_INSERT
-                    dbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Markets OFF");
+                    dbContext.Markets.Add(market);
                 }
             }
 
-            return View("Markets", markets);
+            dbContext.SaveChanges();
+            ViewBag.dbSuccessComp = 1; // Set success flag
         }
+
+
     }
 }

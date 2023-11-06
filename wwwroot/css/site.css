@@ -21,6 +21,16 @@ body {
   margin-bottom: 60px;
 }
 
+
+.hoverable-card {
+    transition: transform 0.2s;
+}
+
+.hoverable-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 /*body {
     background-image: url('../images/img0.png');
     background-size: cover;
@@ -28,7 +38,6 @@ body {
     background-attachment: fixed;
     background-position: center center;
 }*/
-
 .registration {
     max-width: 100%;
     height: auto;

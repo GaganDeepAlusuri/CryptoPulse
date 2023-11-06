@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using CryptoPulse.Areas.Identity.Data;
 using Newtonsoft.Json;
 
 namespace CryptoPulse.Models
@@ -13,7 +14,10 @@ namespace CryptoPulse.Models
     public class Market
     {
         [Key]
-        public int MarketID { get; set; }
+        public int ID { get; set; }
+
+        public int coinId { get; set; }
+        public Coin Coin { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }

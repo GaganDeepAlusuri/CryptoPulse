@@ -28,7 +28,5 @@ namespace CryptoPulse.Models
 
         [JsonProperty("country")]
         public string Country { get; set; }
-
-        public List<Market> Markets { get; set; }
     }
 }
