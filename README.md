@@ -42,7 +42,7 @@ CryptoPulse is a cryptocurrency tracking web application built using .NET MVC, E
 - dotnet ef database update
 . **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/CryptoPulse.git
+   git clone https://github.com/GaganDeepAlusuri/CryptoPulse.git
 
 ### Open `appsettings.json`
 
