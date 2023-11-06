@@ -16,7 +16,6 @@ namespace CryptoPulse.Data
 
         public DbSet<Coin> Coins { get; set; }
         public DbSet<Market> Markets { get; set; }
-        public DbSet<Exchange> Exchanges { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

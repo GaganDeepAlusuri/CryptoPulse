@@ -166,6 +166,11 @@ namespace CryptoPulse.Controllers
                         dbContext.Coins.Remove(coinToDelete);
                         dbContext.SaveChanges();
 
+                        // Delete associated markets for the coin
+                        var marketsToDelete = dbContext.Markets.Where(m => m.coinId == coinID);
+                        dbContext.Markets.RemoveRange(marketsToDelete);
+                        dbContext.SaveChanges();
+
                         transaction.Commit();
                         ViewBag.dbSuccessComp = 1;
                     }
@@ -174,7 +179,7 @@ namespace CryptoPulse.Controllers
                         // Coin with the given ID does not exist, handle it as needed
                         transaction.Rollback();
                         // Handle the exception here (e.g., log it or set an error flag)
-                        ViewBag.dbSucessComp = 0;
+                        ViewBag.dbSuccessComp = 0;
 
                         // Return an error view or take appropriate action
                         return View("Error"); // You should create an "Error" view in your Views folder
@@ -184,7 +189,7 @@ namespace CryptoPulse.Controllers
                 {
                     transaction.Rollback();
                     // Handle the exception here (e.g., log it or set an error flag)
-                    ViewBag.dbSucessComp = 0;
+                    ViewBag.dbSuccessComp = 0;
 
                     // Optionally, you can pass the exception message to the view
                     ViewBag.ErrorMessage = ex.Message;
@@ -199,7 +204,6 @@ namespace CryptoPulse.Controllers
             HttpContext.Session.SetString(SessionKeyName, coinsData);
             return View("WatchList", watchListcoins);
         }
-
 
         public IActionResult Markets(int coinID)
         {
