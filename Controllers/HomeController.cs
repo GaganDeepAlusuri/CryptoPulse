@@ -41,14 +41,14 @@ namespace CryptoPulse.Controllers
                 List<Coin> top10Coins = sortedCoins.Take(10).ToList();
 
                 // Set the success flag to 1 on success
-                ViewBag.dbSucessComp = 1;
+                ViewBag.dbSuccessComp = 1;
 
                 return View("Index", top10Coins);
             }
             catch (Exception ex)
             {
                 // Handle the exception here (e.g., log it or set an error flag)
-                ViewBag.dbSucessComp = 0;
+                ViewBag.dbSuccessComp = 0;
 
                 // Optionally, you can pass the exception message to the view
                 ViewBag.ErrorMessage = ex.Message;
@@ -79,14 +79,14 @@ namespace CryptoPulse.Controllers
                 HttpContext.Session.SetString(SessionKeyName, coinsData);
 
                 // Set the success flag to 1 on success
-                ViewBag.dbSucessComp = 1;
+                ViewBag.dbSuccessComp = 1;
 
                 return View(coins);
             }
             catch (Exception ex)
             {
                 // Handle the exception here (e.g., log it or set an error flag)
-                ViewBag.dbSucessComp = 0;
+                ViewBag.dbSuccessComp = 0;
 
                 // Optionally, you can pass the exception message to the view
                 ViewBag.ErrorMessage = ex.Message;
@@ -108,14 +108,14 @@ namespace CryptoPulse.Controllers
                 HttpContext.Session.SetString(SessionKeyName, coinsData);
 
                 // Set the success flag to 1 on success
-                ViewBag.dbSucessComp = 1;
+                ViewBag.dbSuccessComp = 1;
 
                 return View("WatchList", watchListcoins);
             }
             catch (Exception ex)
             {
                 // Handle the exception here (e.g., log it or set an error flag)
-                ViewBag.dbSucessComp = 0;
+                ViewBag.dbSuccessComp = 0;
 
                 // Optionally, you can pass the exception message to the view
                 ViewBag.ErrorMessage = ex.Message;
@@ -132,14 +132,14 @@ namespace CryptoPulse.Controllers
                 // Your logic for successful execution here
 
                 // Set the success flag to 1 on success
-                ViewBag.dbSucessComp = 1;
+                ViewBag.dbSuccessComp = 1;
 
                 return View("AboutUs");
             }
             catch (Exception ex)
             {
                 // Handle the exception here (e.g., log it or set an error flag)
-                ViewBag.dbSucessComp = 0;
+                ViewBag.dbSuccessComp = 0;
 
                 // Optionally, you can pass the exception message to the view
                 ViewBag.ErrorMessage = ex.Message;
@@ -223,14 +223,14 @@ namespace CryptoPulse.Controllers
                 };
 
                 // Set the success flag to 1 on success
-                ViewBag.dbSucessComp = 1;
+                ViewBag.dbSuccessComp = 1;
 
                 return View("Markets", marketsViewModel);
             }
             catch (Exception ex)
             {
                 // Handle the exception here (e.g., log it or set an error flag)
-                ViewBag.dbSucessComp = 0;
+                ViewBag.dbSuccessComp = 0;
 
                 // Optionally, you can pass the exception message to the view
                 ViewBag.ErrorMessage = ex.Message;
@@ -251,14 +251,14 @@ namespace CryptoPulse.Controllers
                 HttpContext.Session.SetString(SessionKeyName, exchangesData);
 
                 // Set the success flag to 1 on success
-                ViewBag.dbSucessComp = 1;
+                ViewBag.dbSuccessComp = 1;
 
                 return View("Exchanges", exchanges);
             }
             catch (Exception ex)
             {
                 // Handle the exception here (e.g., log it or set an error flag)
-                ViewBag.dbSucessComp = 0;
+                ViewBag.dbSuccessComp = 0;
 
                 // Optionally, you can pass the exception message to the view
                 ViewBag.ErrorMessage = ex.Message;
@@ -329,7 +329,7 @@ namespace CryptoPulse.Controllers
                         {
                             transaction.Rollback(); // Rollback the entire transaction
                                                     // Handle the exception here (e.g., log it or set an error flag)
-                            ViewBag.dbSucessComp = 0;
+                            ViewBag.dbSuccessComp = 0;
 
                             // Return an error view or take appropriate action
                             return View("Error"); // You should create an "Error" view in your Views folder
@@ -339,7 +339,7 @@ namespace CryptoPulse.Controllers
                     {
                         transaction.Rollback(); // Rollback the entire transaction
                                                 // Handle the exception here (e.g., log it or set an error flag)
-                        ViewBag.dbSucessComp = 0;
+                        ViewBag.dbSuccessComp = 0;
 
                         // Optionally, you can pass the exception message to the view
                         ViewBag.ErrorMessage = ex.Message;
@@ -427,7 +427,5 @@ namespace CryptoPulse.Controllers
             dbContext.SaveChanges();
             ViewBag.dbSuccessComp = 1; // Set success flag
         }
-
-
     }
 }
