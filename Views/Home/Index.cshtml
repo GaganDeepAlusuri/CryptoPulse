@@ -12,14 +12,26 @@
         <section class="mb-5">
             <h2>Real-Time Cryptocurrency Prices</h2>
             <p>
-                Stay updated with real-time prices for a wide range of cryptocurrencies.
-                From Bitcoin (BTC) and Ethereum (ETH) to altcoins and tokens, you'll have
-                access to the latest market data.
+                Welcome to Crypto Pulse, your gateway to the world of real-time cryptocurrency prices. 
+                Here, you'll find a treasure trove of up-to-the-minute data covering a vast array of cryptocurrencies. 
+                From the stalwarts like Bitcoin (BTC) and Ethereum (ETH) to an expansive universe of altcoins and tokens, our platform offers you unparalleled access to the latest market trends and insights.
+                As you embark on your journey through the dynamic landscape of digital assets, you'll be armed with the knowledge you need to make informed decisions.
+                Whether you're a seasoned trader or a curious enthusiast, Crypto Pulse equips you with the tools to navigate this fast-paced industry with confidence.
+                Our mission is to provide you with a comprehensive and user-friendly platform that empowers you to stay ahead in the world of cryptocurrency.
+                With real-time updates and in-depth analyses, you'll have everything you need to seize opportunities and mitigate risks.
+            </p>
+
+            <p>
+                Join us on this exciting adventure into the realm of cryptocurrencies. 
+                Let's explore, learn, and thrive together in this ever-evolving landscape. 
+                Welcome to Crypto Pulse, where the future of finance is at your fingertips.
+
             </p>
             <div class="text-center">
                 <h2>Top 10 Coins by Price</h2>
                 <hr />
                 <canvas id="coinChart" width="400" height="200"></canvas>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
                 <script>
                     // Deserialize the JSON data from the server and store it in the 'coins' variable
@@ -52,6 +64,11 @@
                             scales: {
                                 y: {
                                     beginAtZero: true
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false // Remove the legend
                                 }
                             }
                         }
