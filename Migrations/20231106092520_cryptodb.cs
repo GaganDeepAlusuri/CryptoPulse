@@ -12,23 +12,6 @@ namespace CryptoPulse.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Exchanges",
-                columns: table => new
-                {
-                    ExchangeID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NameId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VolumeUSD = table.Column<double>(type: "float", nullable: false),
-                    ActivePairs = table.Column<int>(type: "int", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Exchanges", x => x.ExchangeID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RoleClaims",
                 columns: table => new
                 {
@@ -208,9 +191,6 @@ namespace CryptoPulse.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Exchanges");
-
             migrationBuilder.DropTable(
                 name: "Markets");
 

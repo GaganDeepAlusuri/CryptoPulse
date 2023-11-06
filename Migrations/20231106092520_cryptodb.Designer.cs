@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CryptoPulse.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20231106085813_cryptodb")]
+    [Migration("20231106092520_cryptodb")]
     partial class cryptodb
     {
         /// <inheritdoc />
@@ -83,38 +83,6 @@ namespace CryptoPulse.Migrations
                     b.HasIndex("IdentityUserId");
 
                     b.ToTable("Coins");
-                });
-
-            modelBuilder.Entity("CryptoPulse.Models.Exchange", b =>
-                {
-                    b.Property<string>("ExchangeID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ActivePairs")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NameId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("VolumeUSD")
-                        .HasColumnType("float");
-
-                    b.HasKey("ExchangeID");
-
-                    b.ToTable("Exchanges");
                 });
 
             modelBuilder.Entity("CryptoPulse.Models.Market", b =>

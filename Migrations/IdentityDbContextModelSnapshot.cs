@@ -82,38 +82,6 @@ namespace CryptoPulse.Migrations
                     b.ToTable("Coins");
                 });
 
-            modelBuilder.Entity("CryptoPulse.Models.Exchange", b =>
-                {
-                    b.Property<string>("ExchangeID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ActivePairs")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NameId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("VolumeUSD")
-                        .HasColumnType("float");
-
-                    b.HasKey("ExchangeID");
-
-                    b.ToTable("Exchanges");
-                });
-
             modelBuilder.Entity("CryptoPulse.Models.Market", b =>
                 {
                     b.Property<int>("ID")
