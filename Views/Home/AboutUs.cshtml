@@ -3,37 +3,52 @@
     ViewData["Title"] = "About Us";
 }
 
-    <h1>@ViewData["Title"]</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+            <div class="card">
                 <div class="card">
-                    <img src="~/images/gag.png" class="card-img-top" alt="...">
+                    <a href="https://github.com/GaganDeepAlusuri" target="_blank">
+                        <img src="~/images/gag.png" class="card-img-top hoverable-img" alt="...">
+                    </a>
                     <div class="card-body">
                         <p class="card-text">I am Venkata Sai Gagan Deep Alusuri. I have dedicated substantial effort to establishing a robust project structure, meticulously designing the entities to ensure an efficient data model. In addition, I have successfully implemented a secure login system with authentication mechanisms in place, guaranteeing a seamless and protected user experience. Furthermore, I have established comprehensive authorization protocols to manage user profiles effectively. Alongside this, I have worked on URL manipulation, ensuring precise and effective handling of web addresses within the application. Additionally, I have been involved in the Azure deployment of the project, ensuring that it is efficiently hosted and accessible.</p>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+            <div class="card">
                 <div class="card">
-                    <img src="~/images/vin.jpeg" class="card-img-top" alt="...">
+                    <a href="https://github.com/vineethlanka" target="_blank">
+                        <img src="~/images/vin.jpeg" class="card-img-top hoverable-img" alt="...">
+                    </a>
                     <div class="card-body">
                         <p class="card-text">I am Vineeth Lanka, and I extracted real-time coin data from the API and created a visually engaging chart on the home menu to display the top coins by price, offering users an intuitive overview of the cryptocurrency market. Additionally, I revamped the Navigation menu and designed the Exchange page for improved user experience, populating it with the Exchanges information from the API.</p>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+            <div class="card">
                 <div class="card">
-                    <img src="~/images/yas.png" class="card-img-top" alt="...">
+                    <a href="https://github.com/yaschilu" target="_blank">
+                        <img src="~/images/yas.png" class="card-img-top hoverable-img" alt="...">
+                    </a>
                     <div class="card-body">
-                        <p class="card-text">I am Yashwanthika Chilukuri, and I have played a pivotal role in the development process by meticulously crafting the content and layout of the 'About Us' page, ensuring it effectively conveys our brand's mission and values. Additionally, I took charge of implementing Bootstrap, leveraging its powerful framework to enhance the site's overall design, functionality, and user experience. With a keen eye for detail, I dedicated time to meticulously testing and refining the site's responsiveness across various devices and screen sizes, guaranteeing seamless access and usability for a diverse range of users. This comprehensive approach not only elevates the visual appeal and functionality of the project, but also reflects a deep commitment to delivering a polished, user-friendly product.</p>
+                        <p class="card-text">I am Yashwanthika Chilukuri, and I have played a pivotal role in the development process by meticulously crafting the content and layout of the 'About Us' page, ensuring it effectively conveys our brand's mission and values. Additionally, I took charge of implementing Bootstrap, leveraging its powerful framework to enhance the site's overall design, functionality, and user experience. With a keen eye for detail, I dedicated time to meticulously testing and refining the site's responsiveness across various devices and screen sizes, guaranteeing seamless access and usability for a diverse range of users. This comprehensive approach not only elevates the visual appeal and functionality of the project but also reflects a deep commitment to delivering a polished, user-friendly product.</p>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
+            <div class="card">
                 <div class="card">
-                    <img src="~/images/man.png" class="card-img-top" alt="...">
+                    <a href="https://github.com/manoj-arasada" target="_blank">
+                        <img src="~/images/man.png" class="card-img-top hoverable-img" alt="...">
+                    </a>
                     <div class="card-body">
                         <p class="card-text">I am Manoj Arsada, and I've spearheaded the data integration process, skillfully extracting and processing information from the API to maintain a constant flow of accurate and up-to-date data for our application. Additionally, I've significantly improved the WatchList functionality by implementing a robust 'Delete' feature, empowering users to efficiently manage their saved items. In laying the foundation for our application, I've prioritized the design of a robust and efficient data model, following a 'code-first' approach. This approach ensures our database is structured for flexibility, scalability, and optimal performance, setting the stage for seamless data management and future expansions. Overall, these efforts have resulted in a streamlined and dynamic system that meets current needs and provides a solid framework for adaptability and growth in our project's journey.</p>
                     </div>
@@ -41,6 +56,16 @@
             </div>
         </div>
     </div>
+</div>
+
+<style>
+    .hoverable-img:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
+</style>
+
+
 
     <div class="container mt-3 text-center">
         <hr class="my-4" style="border-width: 2px;"> <!-- Thicker line -->
