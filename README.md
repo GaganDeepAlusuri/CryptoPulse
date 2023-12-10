@@ -8,32 +8,32 @@ CryptoPulse is a cryptocurrency tracking web application built using .NET MVC, E
 
 1. **Home Page**
    - Overview of the application's features and functionalities.
-   - ![Home Page](https://imgur.com/3wdsiWS)
+   - ![Home Page](https://i.imgur.com/3wdsiWS.png)
 
 2. **Coins Page**
    - Displays information about the top cryptocurrencies.
    - Utilizes the [Coinlore Cryptocurrency Data API](https://www.coinlore.com/cryptocurrency-data-api) for real-time data.
-   - ![Coins Page](https://imgur.com/taWrpxV)
+   - ![Coins Page](https://i.imgur.com/taWrpxV.png)
 
 3. **Markets Page**
    - Provides detailed information about the markets associated with each coin.
-   - ![Markets Page](https://imgur.com/91pUFvd)
+   - ![Markets Page](https://i.imgur.com/91pUFvd.png)
 
 4. **Exchanges Page**
    - Offers insights into different cryptocurrency exchanges.
-   - ![Exchanges Page](https://imgur.com/3ckhBwb)
+   - ![Exchanges Page](https://i.imgur.com/3ckhBwb.png)
 
 5. **Watchlist (For Logged-in Users)**
    - Allows registered users to add and remove coins from their watchlist for easy tracking.
-   - ![Watchlist Feature](https://imgur.com/p83K6Os)
+   - ![Watchlist Feature](https://i.imgur.com/p83K6Os.png)
 
 6. **Register Page**
    - User registration interface.
-   - ![Register Page](https://imgur.com/OKgf8t8)
+   - ![Register Page](https://i.imgur.com/OKgf8t8.png)
 
 7. **Login Page**
    - User login interface.
-   - ![Login Page](https://imgur.com/GvYzToh)
+   - ![Login Page](https://i.imgur.com/GvYzToh.png)
 
 ## CI/CD Implementation
 - CI/CD has been implemented using GitHub workflows to streamline development and deployment processes.
@@ -42,7 +42,7 @@ CryptoPulse is a cryptocurrency tracking web application built using .NET MVC, E
 
 - CryptoPulse utilizes Azure Cloud services for enhanced performance and scalability.
 - Detailed information about the Azure resource group used for deployment and management of the application's cloud resources.
-- ![Azure Resource Group](https://imgur.com/F4IoJR1) (https://imgur.com/TQloUAb)
+- ![Azure Resource Group](https://i.imgur.com/F4IoJR1.png) (https://i.imgur.com/TQloUAb.png)
 ## Database Schema
 
 - **Entities**
