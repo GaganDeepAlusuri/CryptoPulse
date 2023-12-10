@@ -6,21 +6,43 @@ CryptoPulse is a cryptocurrency tracking web application built using .NET MVC, E
 
 ## Features
 
-1. **Coins Page**
+1. **Home Page**
+   - Overview of the application's features and functionalities.
+   - ![Home Page](https://imgur.com/3wdsiWS)
+
+2. **Coins Page**
    - Displays information about the top cryptocurrencies.
    - Utilizes the [Coinlore Cryptocurrency Data API](https://www.coinlore.com/cryptocurrency-data-api) for real-time data.
+   - ![Coins Page](https://imgur.com/taWrpxV)
 
-2. **Markets Page**
+3. **Markets Page**
    - Provides detailed information about the markets associated with each coin.
-   - Implements one-to-many relationships between coins and markets.
+   - ![Markets Page](https://imgur.com/91pUFvd)
 
-3. **Exchanges Page**
+4. **Exchanges Page**
    - Offers insights into different cryptocurrency exchanges.
-   - Establishes one-to-many relationships between exchanges and markets.
+   - ![Exchanges Page](https://imgur.com/3ckhBwb)
 
-4. **Watchlist (For Logged-in Users)**
+5. **Watchlist (For Logged-in Users)**
    - Allows registered users to add and remove coins from their watchlist for easy tracking.
+   - ![Watchlist Feature](https://imgur.com/p83K6Os)
 
+6. **Register Page**
+   - User registration interface.
+   - ![Register Page](https://imgur.com/OKgf8t8)
+
+7. **Login Page**
+   - User login interface.
+   - ![Login Page](https://imgur.com/GvYzToh)
+
+## CI/CD Implementation
+- CI/CD has been implemented using GitHub workflows to streamline development and deployment processes.
+
+## Azure Cloud Resource Group
+
+- CryptoPulse utilizes Azure Cloud services for enhanced performance and scalability.
+- Detailed information about the Azure resource group used for deployment and management of the application's cloud resources.
+- ![Azure Resource Group](https://imgur.com/F4IoJR1) (https://imgur.com/TQloUAb)
 ## Database Schema
 
 - **Entities**
